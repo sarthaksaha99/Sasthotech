@@ -1,0 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.btn {
+  display: inline-block;
+
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+.btn:hover {
+  transform: scale(1.1);
+}
+
+.labelStyle {
+  background-color: #bfb9b9;
+  @apply w-44 border border-gray-300 rounded-md mx-3
+    mb-3;
+}
+
+.inputStyle {
+  @apply w-full border border-gray-300 rounded-md px-3 py-2;
+}
+@media print {
+  /* Apply general styles to the printed page */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #333;
+  }
+
+  /* Modify the appearance of specific elements */
+  /* h1 {
+      font-size: 20px;
+      color: #555;
+    } */
+
+  /* Hide unnecessary elements */
+  .image-selection {
+    display: block;
+    width: 100%;
+  }
+  .bill-page {
+    display: block;
+    width: 100%;
+  }
+  .header,
+  .primary-info,
+  .test-info,
+  .add-btn,
+  .navigation,
+  .discount-section,
+  .intotal-part,
+  .pc-part,
+  .print-btn,
+  .navbar,
+  .print-btn,
+  .cross-btn,
+  .footer,
+  .remove-test-btn {
+    display: none !important;
+  }
+  .company-logo {
+    display: block !important;
+  }
+  .info-details {
+    display: block !important;
+  }
+}
+/* Add your custom CSS styles here */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #f8f8f8;
+  padding: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  display: inline;
+  margin-right: 10px;
+}
+
+.hero {
+  text-align: center;
+  padding: 100px 0;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.about-section {
+  background-color: #f8f8f8;
+  padding: 50px 0;
+}
+
+.about-section img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.features-section {
+  padding: 50px 0;
+}
+
+.features-section img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.testimonials-section {
+  background-color: #f8f8f8;
+  padding: 50px 0;
+}
+
+.testimonials-section img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.contact-section {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.contact-section input[type="text"],
+.contact-section textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.contact-section .cta-button {
+  margin-top: 20px;
+}
+
+.from-left:before,
+.from-left:after {
+  top: 0;
+  width: 0;
+  height: 100%;
+}
+
+.from-left:before {
+  right: 0;
+  border: 1px solid var(--inv);
+  border-left: 0;
+  border-right: 0;
+}
+
+.from-left:after {
+  left: 0;
+}
+
+.from-left:hover:before,
+.from-left:hover:after {
+  width: 100%;
+}
+.styledBtn {
+  position: relative;
+  padding: 1.4rem 4.2rem;
+  padding-right: 3.1rem;
+  font-size: 1.4rem;
+  color: var(--inv);
+  letter-spacing: 1.1rem;
+  text-transform: uppercase;
+  transition: all 500ms cubic-bezier(0.77, 0, 0.175, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.styledBtn:before,
+.styledBtn:after {
+  content: "";
+  position: absolute;
+  transition: inherit;
+  z-index: -1;
+}
+
+.styledBtn:hover {
+  color: var(--def);
+  transition-delay: 0.5s;
+}
+
+.styledBtn:hover:before {
+  transition-delay: 0s;
+}
+
+.styledBtn:hover:after {
+  background: var(--inv);
+  transition-delay: 0.35s;
+}
+/* .footer {
+  position: fixed;
+  bottom: 0;
+} */
