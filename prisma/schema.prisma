@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String      @id @default(cuid())
+  name         String?
+  email        String      @unique()
+  password     String
+  role         String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt()
+  Diagnostic   Diagnostic? @relation(fields: [diagnosticId], references: [id])
+  diagnosticId String?
+  bills        Bill[]
+
+  @@index([email])
+}
+
+model Doctor {
+  id            String          @id @default(cuid())
+  name          String
+  specialist    String
+  image         String
+  designation   String
+  division      String
+  link          String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt()
+  Diagnostic    Diagnostic?     @relation(fields: [diagnosticId], references: [id])
+  diagnosticId  String?
+  bills         Bill[]
+  appointments  Appointment[]
+  doctorChamber DoctorChamber[]
+}
+
+model DoctorChamber {
+  id           String      @id @default(cuid())
+  place        String
+  time         String
+  phone        String?
+  Diagnostic   Diagnostic? @relation(fields: [diagnosticId], references: [id])
+  diagnosticId String?
+  Doctor       Doctor?     @relation(fields: [doctorId], references: [id])
+  doctorId     String
+
+  @@unique([diagnosticId, doctorId])
+}
+
+model TestName {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+model Diagnostic {
+  id            String          @id @default(cuid())
+  name          String?
+  address       String?
+  logo          String?
+  division      String
+  users         User[]
+  tests         Test[]
+  doctors       Doctor[]
+  labs          Lab[]
+  bills         Bill[]
+  billTest      BillTest[]
+  dailyExpense  DailyExpense[]
+  Appointment   Appointment[]
+  DoctorChamber DoctorChamber[]
+
+  @@index([division])
+}
+
+model Test {
+  id           Int         @id @default(autoincrement())
+  name         String
+  price        Int
+  type         String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt()
+  dignostic    Diagnostic? @relation(fields: [diagnosticId], references: [id])
+  diagnosticId String?
+  billTest     BillTest[]
+
+  @@unique([name, type])
+}
+
+model Lab {
+  id           Int         @id @default(autoincrement())
+  name         String
+  labId        String      @unique
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt()
+  dignostic    Diagnostic? @relation(fields: [diagnosticId], references: [id])
+  diagnosticId String?
+}
+
+model Bill {
+  id               Int          @id @default(autoincrement())
+  billId           String
+  name             String
+  age              Int
+  gender           String
+  totalAmout       Int
+  paidAmount       Int
+  hospitalDiscount Int
+  doctorPercentage Int
+  pcName           String?
+  pcPercentage     Int
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt()
+  dignostic        Diagnostic?  @relation(fields: [diagnosticId], references: [id])
+  diagnosticId     String?
+  phone            String
+  status           String       @default("created")
+  doctor           Doctor?      @relation(fields: [doctorId], references: [id])
+  doctorId         String?
+  doctorNameFix    String?
+  tests            BillTest[]
+  user             User?        @relation(fields: [userId], references: [id])
+  userId           String?
+  appointment      Appointment? @relation(fields: [appointmentId], references: [id])
+  appointmentId    String?
+}
+
+model BillTest {
+  id           Int         @id @default(autoincrement())
+  name         String
+  price        Int
+  type         String
+  quantity     Int         @default(1)
+  createdAt    DateTime    @default(now())
+  dignostic    Diagnostic? @relation(fields: [diagnosticId], references: [id])
+  diagnosticId String?
+  test         Test?       @relation(fields: [testId], references: [id])
+  testId       Int?
+  bill         Bill?       @relation(fields: [billId], references: [id])
+  billId       Int?
+}
+
+model DailyExpense {
+  id           String      @id @default(cuid())
+  type         String
+  handedTo     String
+  amount       Int
+  createdAt    DateTime    @default(now())
+  diagnostic   Diagnostic? @relation(fields: [diagnosticId], references: [id])
+  diagnosticId String
+}
+
+model Appointment {
+  id           String      @id @default(cuid())
+  name         String
+  phone        String
+  time         String
+  serial       Int
+  status       String      @default("appointed")
+  createdAt    DateTime    @default(now())
+  diagnostic   Diagnostic? @relation(fields: [diagnosticId], references: [id])
+  diagnosticId String
+  bills        Bill[]
+  doctor       Doctor?     @relation(fields: [doctorId], references: [id])
+  doctorId     String?
+}

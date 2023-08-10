@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: ./
+      args:
+        - DATABASE_URL=${DATABASE_URL}
+      network: smarthospital
+    restart: always
+    ports:
+      - 5000:5000
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    networks:
+      - smarthospital
+
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - ./postgresData:/var/lib/postgresql/data
+    networks:
+      - smarthospital
+
+networks:
+  smarthospital: 
+    driver: bridge
